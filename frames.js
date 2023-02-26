@@ -1,25 +1,29 @@
 class Frame{
   constructor(){
+    this.rolls = []
     this.roll1;
     this.roll2;
     this.spare = false;
     this.strike = false;
   }
 
-  roll1(score){
-    this.roll1 = score;
-  }
 
-  roll2(score){
-    this.roll2 = score;
+  roll(score){
+    if(this.rolls.length < 2){
+      this.rolls.push(score)
+    }
   }
 
   getScore(){
-    return this.roll1 + this.roll2;
+    const sum = this.rolls.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue;
+    }, 0);
+
+    return sum;
   } 
 
   isStrike(){
-    if(this.roll1 === 10){
+    if(this.rolls[0] === 10){
       this.strike = true;
       return true;
     } else {
@@ -28,7 +32,7 @@ class Frame{
   }
 
   isSpare(){
-    if(this.roll1 + this.roll2 === 10){
+    if(this.getScore() === 10){
       this.spare = true;
       return true;
     } else {
